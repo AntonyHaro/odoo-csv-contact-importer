@@ -22,7 +22,7 @@ def import_csv_contacts(file_name):
             street_index = header.index("Street")
             cpf_index = header.index("CPF")
             zipcode_index = header.index("Zip")
-            # country_index = header.index("Country")
+            country_index = header.index("Country")
             
             contacts = []
             invalid_contacts = []
@@ -45,7 +45,7 @@ def import_csv_contacts(file_name):
                     "street": row[street_index],
                     "vat": row[cpf_index],  
                     "zip": row[zipcode_index],
-                    # "country_id": country_index,  
+                    "country_id": int(row[country_index]),  
                 }
                 contacts.append(contact)
             
@@ -76,7 +76,7 @@ def authenticate(url, db, username, password):
 def create_contacts(url, db, uid, password, contacts):
     try: 
         models = xmlrpc.client.ServerProxy("{}/xmlrpc/2/object".format(url))
-        
+
         for contact in contacts:
             if not contact.get("name") or not contact.get("email"):
                 print(f"Contato inválido, faltando nome ou email: {contact}")

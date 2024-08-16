@@ -1,6 +1,2 @@
 City,Email,Name,Street,CPF,Zip,Country
-São Paulo,joao.,João Silva,"Rua A, 123",12345678900,01000-000,Brazil
-Rio de Janeiro,maria.oliveira@example.com,Maria Oliveira,"Rua B, 456",98765432100,20000-000,Brazil
-Belo Horizonte,carlos.santos@example.com,Carlos Santos,"Avenida C, 789",32165498700,30100-000,Brazil
-Porto Alegre,ana.pereira@example.com,Ana Pereira,"Rua D, 101",45678912300,90000-000,Brazil
-Curitiba,luana.martins@example.com,Luana Martins,"Rua E, 202",65432198700,80000-000,Brazil
+São Paulo,joao.,João Silva,"Rua A, 123",12345678900,01000-000,31
