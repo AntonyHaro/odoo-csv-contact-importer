@@ -2,6 +2,7 @@ import xmlrpc.client
 import csv
 import os
 from dotenv import load_dotenv
+
 load_dotenv()
 
 def import_csv_contacts(file_name):
@@ -16,39 +17,49 @@ def import_csv_contacts(file_name):
             reader = csv.reader(file)
             header = next(reader)
             
-            email_index = header.index("Email")
-            name_index = header.index("Name")
-            city_index = header.index("City")
-            street_index = header.index("Street")
-            cpf_index = header.index("CPF")
-            zipcode_index = header.index("Zip")
-            country_index = header.index("Country")
-            
+            column_indices = {
+                "name": header.index("name"),
+                "is_company": header.index("is_company"),
+                "company_name": header.index("company_name"),
+                # "country_id": header.index("country_id"),
+                # "state_id": header.index("state_id"),
+                "zip": header.index("zip"),
+                "city": header.index("city"),
+                "street": header.index("street"),
+                "phone": header.index("phone"),
+                "mobile": header.index("mobile"),
+                "email": header.index("email"),
+                "vat": header.index("vat")
+            }
+
             contacts = []
             invalid_contacts = []
             
             print("\nRegistros válidos do arquivo:")
             for row_index, row in enumerate(reader, start=1):    
-                name = row[name_index]
-                email = row[email_index]
-                
-                if not name or not email:
-                    invalid_contacts.append(f"Registro {row_index}")
-                    continue
-                
-                print(f"Registro {row_index}, Nome: {row[name_index]}, Email: {row[email_index]}")
                 
                 contact = {
-                    "name": row[name_index],
-                    "email": row[email_index],
-                    "city": row[city_index],
-                    "street": row[street_index],
-                    "vat": row[cpf_index],  
-                    "zip": row[zipcode_index],
-                    "country_id": int(row[country_index]),  
+                    "name": row[column_indices["name"]].strip(),
+                    "is_company": row[column_indices["is_company"]].strip(),
+                    "company_name": row[column_indices["company_name"]].strip(),
+                    # "country_id": row[column_indices["country_id"]].strip(),
+                    # "state_id": row[column_indices["state_id"]].strip(),
+                    "zip": row[column_indices["zip"]].strip(),
+                    "city": row[column_indices["city"]].strip(),
+                    "street": row[column_indices["street"]].strip(),
+                    "phone": row[column_indices["phone"]].strip(),
+                    "mobile": row[column_indices["mobile"]].strip(),
+                    "email": row[column_indices["email"]].strip(),
+                    "vat": row[column_indices["vat"]].strip()
                 }
+
+                if not contact["name"] or not contact["email"]:
+                    invalid_contacts.append(f"Registro {row_index}")
+                    continue
+
+                print(f"Registro {row_index}, Nome: {contact['name']}, Email: {contact['email']}")
                 contacts.append(contact)
-            
+                
             if len(invalid_contacts) > 0:
                 print("\nRegistros inválidos:")
                 for i in invalid_contacts:
