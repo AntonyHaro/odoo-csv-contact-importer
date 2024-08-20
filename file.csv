@@ -1,2 +1,2 @@
-City,Email,Name,Street,CPF,Zip,Country
-São Paulo,joao.,João Silva,"Rua A, 123",12345678900,01000-000,31
+name,is_company,company_name,country_id,state_id,zip,city,street,phone,mobile,email,vat
+Carla,0,company,31,São Paulo,09060-070,São Paulo,"Rua Feliz, Vila Felicidade",+3210588558,355-687-3262,example@example,123.456.789.09
