@@ -1,2 +1,2 @@
-name,is_company,company_name,country_id,state_id,zip,city,street,phone,mobile,email,vat
-Carla,0,company,31,São Paulo,09060-070,São Paulo,"Rua Feliz, Vila Felicidade",+3210588558,355-687-3262,example@example,123.456.789.09
+name,is_company,company_name,country_name,state_id,zip,city,street,phone,mobile,email,vat
+Carla,0,company,Brazil,São Paulo,09060-070,São Paulo,"Rua Feliz, Vila Felicidade",+3210588558,355-687-3262,example@example,123.456.789.09
