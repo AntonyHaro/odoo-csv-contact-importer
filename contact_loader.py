@@ -22,6 +22,7 @@ def import_csv_contacts(file_name):
                 "is_company": header.index("is_company"),
                 "company_name": header.index("company_name"),
                 "country_name": header.index("country_name"),
+                "state_name": header.index("state_name"),
                 "zip": header.index("zip"),
                 "city": header.index("city"),
                 "street": header.index("street"),
@@ -42,6 +43,7 @@ def import_csv_contacts(file_name):
                     "is_company": row[column_indices["is_company"]].strip(),
                     "company_name": row[column_indices["company_name"]].strip(),
                     "country_id": row[column_indices["country_name"]].strip(),
+                    "state_id": row[column_indices["state_name"]].strip(),
                     "zip": row[column_indices["zip"]].strip(),
                     "city": row[column_indices["city"]].strip(),
                     "street": row[column_indices["street"]].strip(),
@@ -84,6 +86,10 @@ def get_country_id(models, db, uid, password, country_name):
     country_ids = models.execute_kw(db, uid, password, "res.country", "search", [[('name', '=', country_name)]])
     return country_ids[0] if country_ids else None
 
+def get_state_id(models, db, uid, password, country_id, state_name):
+    state_ids = models.execute_kw(db, uid, password, "res.country.state", "search", [[("name", "=", state_name), ("country_id", "=", country_id)]])
+    return state_ids[0] if state_ids else None
+
 def create_contacts(url, db, uid, password, contacts):
     try: 
         models = xmlrpc.client.ServerProxy("{}/xmlrpc/2/object".format(url))
@@ -94,11 +100,17 @@ def create_contacts(url, db, uid, password, contacts):
                 continue
 
             country_id = get_country_id(models, db, uid, password, contact["country_id"])
-
             if country_id:
                 contact["country_id"] = country_id
             else:
                 print(f"País '{contact['country_id']}' não encontrado. O contato não será criado.")
+                continue
+
+            state_id = get_state_id(models, db, uid, password, country_id, contact["state_id"])
+            if state_id:
+                contact["state_id"] = state_id
+            else:
+                print(f"Estado '{contact['state_id']}' não encontrado para o país '{contact['country_id']}'. O contato não será criado.")
                 continue
 
             contact_id = models.execute_kw(db, uid, password, "res.partner", "create", [contact])
